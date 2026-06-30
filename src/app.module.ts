@@ -4,6 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { BullModule } from '@nestjs/bullmq';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AppService } from './app.service';
       }),
       inject: [ConfigService],
     }),
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
