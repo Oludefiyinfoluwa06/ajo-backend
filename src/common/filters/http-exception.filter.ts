@@ -7,6 +7,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as Sentry from '@sentry/nestjs';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -26,6 +27,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getResponse()
         : 'Internal server error';
+
+    // Only send genuine server errors to Sentry — not 4xx client errors
+    if (status >= 500) {
+      Sentry.captureException(exception);
+    }
 
     this.logger.error(
       `${request.method} ${request.url} - ${status}`,
