@@ -94,7 +94,6 @@ model User {
   displayName      String?
   profilePhotoUrl  String?
   phoneNumber      String?
-  phoneVerified    Boolean     @default(false)
   bvnEncrypted     String?
   role             Role[]      @default([SAVER])
   kycStatus        KycStatus   @default(PENDING)
